@@ -1,9 +1,9 @@
 # Kaskazini Flutter App 
-
+```sh
 cd example/kaska_flutter_app
 
 flutter packages pub run build_runner build -d -v
-`
+```
 
 For local development, 
 
