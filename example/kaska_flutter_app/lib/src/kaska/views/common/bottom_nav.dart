@@ -18,8 +18,9 @@ BottomNavigationBar getBottomNavbar(BuildContext context, TabsRouter tabsRouter)
         height: 32,
         width: 32,
       ),
-      label: '',
+      label: 'Home',
     ),
+    
     BottomNavigationBarItem(
       icon: Image.asset(
         'assets/img/bottom_nav/02_a.png',
@@ -31,8 +32,9 @@ BottomNavigationBar getBottomNavbar(BuildContext context, TabsRouter tabsRouter)
         height: 32,
         width: 32,
       ),
-      label: '',
+      label: 'Support',
     ),
+
     BottomNavigationBarItem(
       icon: Image.asset(
         'assets/img/bottom_nav/03_a.png',
@@ -44,7 +46,7 @@ BottomNavigationBar getBottomNavbar(BuildContext context, TabsRouter tabsRouter)
         height: 32,
         width: 32,
       ),
-      label: '',
+      label: 'Profile',
     ),
 
   ];

@@ -7,7 +7,7 @@ export 'package:dio/dio.dart';
 
 export 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import 'package:kaskazini/src/config/app_config.dart';
+//import 'package:kaskazini/src/config/app_config.dart';
 export 'package:kaskazini/src/config/app_config.dart';
 
 export 'package:auto_route/auto_route.dart';
@@ -42,25 +42,38 @@ export 'package:flutter_bloc/flutter_bloc.dart';
 //export 'package:hydrated_bloc/hydrated_bloc.dart';
 export 'package:formz/formz.dart';
 
-import 'package:kaskazini/src/authentication/bloc/authentication_bloc.dart';
-export 'package:kaskazini/src/authentication/bloc/authentication_bloc.dart';
-
 import 'package:kaskazini/src/login/bloc/login_bloc.dart';
 export 'package:kaskazini/src/login/bloc/login_bloc.dart';
+
+import 'package:kaskazini/src/authentication/bloc/authentication_bloc.dart';
+export 'package:kaskazini/src/authentication/bloc/authentication_bloc.dart';
 
 //Export the app views
 export 'package:kaskazini/util/main_barrel.dart';
 
 //#######################
 
-export 'package:kaskazini/src/client/client.dart';
+import 'package:kaskazini/src/chat_client/client.dart';
+export 'package:kaskazini/src/chat_client/client.dart';
+
+import 'package:kaskazini/src/kaska/chat/bloc/chat_client_conn_status_bloc.dart';
+export 'package:kaskazini/src/kaska/chat/bloc/chat_client_conn_status_bloc.dart';
+
+//#######################
+import 'package:kaskazini/src/kaska/chat/models/chat_channel.dart';
+export 'package:kaskazini/src/kaska/chat/models/chat_channel.dart';
+
+import 'package:kaskazini/src/kaska/chat/repository/chat_listing_repository.dart';
+export 'package:kaskazini/src/kaska/chat/repository/chat_listing_repository.dart';
+
+import 'package:kaskazini/src/kaska/chat/services/chat_listing_service.dart';
+export 'package:kaskazini/src/kaska/chat/services/chat_listing_service.dart';
 
 //#######################
 
 final getIt = GetIt.instance;
 
 Future<void> registerServiceLocatorDependencies() async {
-  
   getIt.registerLazySingleton<AuthorizationService>(
       () => AuthorizationService());
 
@@ -86,6 +99,20 @@ Future<void> registerServiceLocatorDependencies() async {
           AppAuthGuard(authBloc: GetIt.instance<AuthenticationBloc>()),
     ),
   );
+
+  getIt.registerLazySingleton<ChatClient>(() => ChatClient());
+
+  getIt.registerLazySingleton<ChatClientConnStatusBloc>(
+      () => ChatClientConnStatusBloc(
+            chatClient: GetIt.instance<ChatClient>(),
+          ));
+
+  getIt.registerLazySingleton<ChatListingService>(() => ChatListingService());
+
+  getIt
+      .registerLazySingleton<ChatListingRepository>(() => ChatListingRepository(
+            chatListingService: GetIt.instance<ChatListingService>(),
+          ));
 
   return;
 }

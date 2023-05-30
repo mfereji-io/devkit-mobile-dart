@@ -12,7 +12,6 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i2;
-import 'package:flutter/foundation.dart' as _i4;
 import 'package:flutter/material.dart' as _i3;
 import 'package:kaskazini/util/service_locator.dart' as _i1;
 
@@ -112,6 +111,14 @@ class AppRouter extends _i2.RootStackRouter {
         child: _i1.KaskaPage(key: args.key),
       );
     },
+    ChatHomeRoute.name: (routeData) {
+      final args = routeData.argsAs<ChatHomeRouteArgs>(
+          orElse: () => const ChatHomeRouteArgs());
+      return _i2.AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: _i1.ChatHomePage(key: args.key),
+      );
+    },
     ChatRoute.name: (routeData) {
       final args =
           routeData.argsAs<ChatRouteArgs>(orElse: () => const ChatRouteArgs());
@@ -202,10 +209,22 @@ class AppRouter extends _i2.RootStackRouter {
               parent: MainAppRouter.name,
               children: [
                 _i2.RouteConfig(
-                  ChatRoute.name,
+                  '#redirect',
                   path: '',
                   parent: ChatRouter.name,
-                )
+                  redirectTo: 'home',
+                  fullMatch: true,
+                ),
+                _i2.RouteConfig(
+                  ChatHomeRoute.name,
+                  path: 'home',
+                  parent: ChatRouter.name,
+                ),
+                _i2.RouteConfig(
+                  ChatRoute.name,
+                  path: 'group',
+                  parent: ChatRouter.name,
+                ),
               ],
             ),
             _i2.RouteConfig(
@@ -228,7 +247,7 @@ class AppRouter extends _i2.RootStackRouter {
 /// generated route for
 /// [_i1.AuthLoginPage]
 class AuthLoginRoute extends _i2.PageRouteInfo<AuthLoginRouteArgs> {
-  AuthLoginRoute({_i4.Key? key})
+  AuthLoginRoute({_i3.Key? key})
       : super(
           AuthLoginRoute.name,
           path: '/login',
@@ -241,7 +260,7 @@ class AuthLoginRoute extends _i2.PageRouteInfo<AuthLoginRouteArgs> {
 class AuthLoginRouteArgs {
   const AuthLoginRouteArgs({this.key});
 
-  final _i4.Key? key;
+  final _i3.Key? key;
 
   @override
   String toString() {
@@ -252,7 +271,7 @@ class AuthLoginRouteArgs {
 /// generated route for
 /// [_i1.AuthWaitLoginPage]
 class AuthWaitLoginRoute extends _i2.PageRouteInfo<AuthWaitLoginRouteArgs> {
-  AuthWaitLoginRoute({_i4.Key? key})
+  AuthWaitLoginRoute({_i3.Key? key})
       : super(
           AuthWaitLoginRoute.name,
           path: '/auth-wait-login',
@@ -265,7 +284,7 @@ class AuthWaitLoginRoute extends _i2.PageRouteInfo<AuthWaitLoginRouteArgs> {
 class AuthWaitLoginRouteArgs {
   const AuthWaitLoginRouteArgs({this.key});
 
-  final _i4.Key? key;
+  final _i3.Key? key;
 
   @override
   String toString() {
@@ -276,7 +295,7 @@ class AuthWaitLoginRouteArgs {
 /// generated route for
 /// [_i1.AuthWaitLogoutPage]
 class AuthWaitLogoutRoute extends _i2.PageRouteInfo<AuthWaitLogoutRouteArgs> {
-  AuthWaitLogoutRoute({_i4.Key? key})
+  AuthWaitLogoutRoute({_i3.Key? key})
       : super(
           AuthWaitLogoutRoute.name,
           path: '/auth-wait-logout',
@@ -289,7 +308,7 @@ class AuthWaitLogoutRoute extends _i2.PageRouteInfo<AuthWaitLogoutRouteArgs> {
 class AuthWaitLogoutRouteArgs {
   const AuthWaitLogoutRouteArgs({this.key});
 
-  final _i4.Key? key;
+  final _i3.Key? key;
 
   @override
   String toString() {
@@ -300,7 +319,7 @@ class AuthWaitLogoutRouteArgs {
 /// generated route for
 /// [_i1.AuthErrorPage]
 class AuthErrorRoute extends _i2.PageRouteInfo<AuthErrorRouteArgs> {
-  AuthErrorRoute({_i4.Key? key})
+  AuthErrorRoute({_i3.Key? key})
       : super(
           AuthErrorRoute.name,
           path: '/auth-error',
@@ -313,7 +332,7 @@ class AuthErrorRoute extends _i2.PageRouteInfo<AuthErrorRouteArgs> {
 class AuthErrorRouteArgs {
   const AuthErrorRouteArgs({this.key});
 
-  final _i4.Key? key;
+  final _i3.Key? key;
 
   @override
   String toString() {
@@ -325,7 +344,7 @@ class AuthErrorRouteArgs {
 /// [_i1.IntroWrapperPage]
 class IntroRoute extends _i2.PageRouteInfo<IntroRouteArgs> {
   IntroRoute({
-    _i4.Key? key,
+    _i3.Key? key,
     List<_i2.PageRouteInfo>? children,
   }) : super(
           IntroRoute.name,
@@ -340,7 +359,7 @@ class IntroRoute extends _i2.PageRouteInfo<IntroRouteArgs> {
 class IntroRouteArgs {
   const IntroRouteArgs({this.key});
 
-  final _i4.Key? key;
+  final _i3.Key? key;
 
   @override
   String toString() {
@@ -377,7 +396,7 @@ class AppInitRouter extends _i2.PageRouteInfo<void> {
 /// generated route for
 /// [_i1.AppInitPage]
 class AppInitRoute extends _i2.PageRouteInfo<AppInitRouteArgs> {
-  AppInitRoute({_i4.Key? key})
+  AppInitRoute({_i3.Key? key})
       : super(
           AppInitRoute.name,
           path: '',
@@ -390,7 +409,7 @@ class AppInitRoute extends _i2.PageRouteInfo<AppInitRouteArgs> {
 class AppInitRouteArgs {
   const AppInitRouteArgs({this.key});
 
-  final _i4.Key? key;
+  final _i3.Key? key;
 
   @override
   String toString() {
@@ -440,7 +459,7 @@ class AccountRouter extends _i2.PageRouteInfo<void> {
 /// generated route for
 /// [_i1.KaskaPage]
 class KaskaRoute extends _i2.PageRouteInfo<KaskaRouteArgs> {
-  KaskaRoute({_i4.Key? key})
+  KaskaRoute({_i3.Key? key})
       : super(
           KaskaRoute.name,
           path: '',
@@ -453,7 +472,7 @@ class KaskaRoute extends _i2.PageRouteInfo<KaskaRouteArgs> {
 class KaskaRouteArgs {
   const KaskaRouteArgs({this.key});
 
-  final _i4.Key? key;
+  final _i3.Key? key;
 
   @override
   String toString() {
@@ -462,12 +481,36 @@ class KaskaRouteArgs {
 }
 
 /// generated route for
+/// [_i1.ChatHomePage]
+class ChatHomeRoute extends _i2.PageRouteInfo<ChatHomeRouteArgs> {
+  ChatHomeRoute({_i3.Key? key})
+      : super(
+          ChatHomeRoute.name,
+          path: 'home',
+          args: ChatHomeRouteArgs(key: key),
+        );
+
+  static const String name = 'ChatHomeRoute';
+}
+
+class ChatHomeRouteArgs {
+  const ChatHomeRouteArgs({this.key});
+
+  final _i3.Key? key;
+
+  @override
+  String toString() {
+    return 'ChatHomeRouteArgs{key: $key}';
+  }
+}
+
+/// generated route for
 /// [_i1.ChatPage]
 class ChatRoute extends _i2.PageRouteInfo<ChatRouteArgs> {
-  ChatRoute({_i4.Key? key})
+  ChatRoute({_i3.Key? key})
       : super(
           ChatRoute.name,
-          path: '',
+          path: 'group',
           args: ChatRouteArgs(key: key),
         );
 
@@ -477,7 +520,7 @@ class ChatRoute extends _i2.PageRouteInfo<ChatRouteArgs> {
 class ChatRouteArgs {
   const ChatRouteArgs({this.key});
 
-  final _i4.Key? key;
+  final _i3.Key? key;
 
   @override
   String toString() {
@@ -488,7 +531,7 @@ class ChatRouteArgs {
 /// generated route for
 /// [_i1.AccountPage]
 class AccountRoute extends _i2.PageRouteInfo<AccountRouteArgs> {
-  AccountRoute({_i4.Key? key})
+  AccountRoute({_i3.Key? key})
       : super(
           AccountRoute.name,
           path: '',
@@ -501,7 +544,7 @@ class AccountRoute extends _i2.PageRouteInfo<AccountRouteArgs> {
 class AccountRouteArgs {
   const AccountRouteArgs({this.key});
 
-  final _i4.Key? key;
+  final _i3.Key? key;
 
   @override
   String toString() {

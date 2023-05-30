@@ -8,6 +8,17 @@ import 'package:dash_chat_2/dash_chat_2.dart';
 
 import 'package:flutter/material.dart';
 
+enum ConnStatus{
+  connected,
+  connecting,
+  disconnected,
+  connectionError,
+}
+class ConnStatusEvent{
+  ConnStatusEvent({required this.connStatus});
+  ConnStatus connStatus;
+}
+
 class ChatClient {
   
   late mfereji.Client _client;
@@ -18,14 +29,18 @@ class ChatClient {
   StreamSubscription<mfereji.ErrorEvent>? _errorSub;
 
   late StreamSubscription<mfereji.MessageEvent> _msgSub;
-
   late mfereji.Subscription? subscription;
 
   final _chatMsgController = StreamController<ChatMessage>();
-
   Stream<ChatMessage> get messages => _chatMsgController.stream;
 
+  //##########
+  final _connectionStatusController = StreamController<ConnStatusEvent>();
+  Stream<ConnStatusEvent> get connectionStatus => _connectionStatusController.stream;
+  //##########
+
   void init(
+
     String chatToken,
   ) {
     _client = mfereji.createClient(
@@ -35,25 +50,32 @@ class ChatClient {
       ),
     );
 
-    _msgSub = _client.message.listen((event) {});
+    //_msgSub = _client.message.listen((event) {});
+    _connectionStatusController.sink.add(ConnStatusEvent(connStatus: ConnStatus.disconnected));
+
   }
 
   Future<void> connect(VoidCallback onConnect) async {
+
     _connectedSub = _client.connected.listen((event) {
       //print("Connected to mfereji chat server");
+      _connectionStatusController.sink.add(ConnStatusEvent(connStatus: ConnStatus.connected));
       onConnect();
     });
 
     _connectingSub = _client.connecting.listen((event) {
       //print("Connecting to mfereji chat server");
+      _connectionStatusController.sink.add(ConnStatusEvent(connStatus: ConnStatus.connecting));
     });
 
     _disconnSub = _client.disconnected.listen((event) {
       //print("DisConnected from mfereji chat server");
+      _connectionStatusController.sink.add(ConnStatusEvent(connStatus: ConnStatus.disconnected));
     });
 
     _errorSub = _client.error.listen((event) {
       //print(event.error);
+      _connectionStatusController.sink.add(ConnStatusEvent(connStatus: ConnStatus.connectionError));
     });
 
     await _client.connect();
@@ -90,23 +112,15 @@ class ChatClient {
     subscription.join.listen(print);
     subscription.leave.listen(print);
 
+    
     subscription.subscribed.listen(print);
     subscription.subscribing.listen(print);
     subscription.unsubscribed.listen(print);
     subscription.error.listen(print);
+    
 
     this.subscription = subscription;
     await subscription.subscribe();
-  }
-
-  Future<void> dispose() async {
-    await _connectingSub?.cancel();
-    await _connectedSub?.cancel();
-    await _disconnSub?.cancel();
-    await _errorSub?.cancel();
-    await _msgSub.cancel();
-    await _msgSub.cancel();
-    await _chatMsgController.close();
   }
 
   Future<void> sendMsg(ChatMessage msg) async {
@@ -125,4 +139,21 @@ class ChatClient {
       rethrow;
     }
   }
+
+  Future<void> disconnect(VoidCallback onDisConnect) async {
+    await _client.disconnect();
+    onDisConnect();
+  }
+
+  Future<void> dispose() async {
+    await _connectingSub?.cancel();
+    await _connectedSub?.cancel();
+    await _disconnSub?.cancel();
+    await _errorSub?.cancel();
+    await _msgSub.cancel();
+
+    await _chatMsgController.close();
+    await _connectionStatusController.close();
+  }
+
 }

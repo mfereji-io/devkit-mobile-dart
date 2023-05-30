@@ -5,6 +5,10 @@ import 'package:kaskazini/util/service_locator.dart';
 part 'authentication_event.dart';
 part 'authentication_state.dart';
 
+
+ChatClientConnStatusBloc chatClientConnStatusBloc = GetIt.instance<ChatClientConnStatusBloc>();
+        
+
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
 
@@ -14,6 +18,7 @@ class AuthenticationBloc
   })  : _userRepository = userRepository,
         _authenticationRepository = authenticationRepository,
         super(AuthenticationUninitialized()) {
+
     on<AppStartedEvent>((event, emit) async {
       
       emit(AuthenticationInitializing());
@@ -24,8 +29,23 @@ class AuthenticationBloc
       if (userHasAuthenticationToken) {
 
         AppUser authenticatedUser = await userRepository.getAuthenticatedUser();
+        
+        /*
+        print("#################################");
+        print("About to init conn status bloc");
+
+        //Register Chat Client
+        
+        ChatClientConnStatusBloc chatClientConnStatusBloc = GetIt.instance<ChatClientConnStatusBloc>();
+        chatClientConnStatusBloc.add(ChatClientInitRequestedEvent(
+          chatToken: authenticatedUser.chatToken, 
+        ));
+
+        print("#################################");
+        */
 
         emit(AuthenticationAuthenticated(authenticatedUser: authenticatedUser));
+
       } else {
         emit(AuthenticationUnauthenticated());
       }
@@ -44,6 +64,14 @@ class AuthenticationBloc
         final loginBloc = getIt<LoginBloc>();
 
         loginBloc.add(LoginResetRequested());
+
+        //Register Chat Client
+        //ChatClientConnStatusBloc chatClientConnStatusBloc = GetIt.instance<ChatClientConnStatusBloc>();
+        
+        chatClientConnStatusBloc.add(ChatClientInitRequestedEvent(
+          chatToken: authenticatedUser.chatToken, 
+        ));
+        
         emit(AuthenticationAuthenticated(authenticatedUser: authenticatedUser));
         
       } catch (_) {
@@ -53,6 +81,8 @@ class AuthenticationBloc
 
 
     on<LogoutRequestedEvent>((event, emit) async {
+      
+      chatClientConnStatusBloc.add(ChatClientDisConnectRequestedEvent());
       emit(AuthenticationLoggingOut());
 
       emit(AuthenticationUnauthenticated());

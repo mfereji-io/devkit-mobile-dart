@@ -5,6 +5,12 @@ class AccountPage extends StatelessWidget {
   AccountPage({super.key});
 
   final AuthenticationBloc authBloc = GetIt.instance<AuthenticationBloc>();
+  /*
+  final ChatClientConnStatusBloc chatClientConnStatusBloc =
+    GetIt.instance<ChatClientConnStatusBloc>();
+  */
+  
+
   final AppRouter appRouter = GetIt.instance<AppRouter>();
 
   @override

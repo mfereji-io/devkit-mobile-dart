@@ -8,13 +8,24 @@ class AppConfig{
 
   static String getPlatformUrl(){
 
+    //################################
+    // Local dev
+    /*
     if(Platform.isIOS){
-      return 'http://localhost:8081/api/v1';
-    }
 
-    return 'http://10.0.2.2:8081/api/v1';
-    //return 'https://api.mybackend.com/api/v1'
-    //return 'https://api.kaska.lab.mfereji.io/api/v1'
+      return "http://localhost:8081/api/v1";
+
+    }else{
+
+      return "http://10.0.2.2:8081/api/v1";
+
+    }
+    */
+    //################################
+
+    //return "https://api.mybackend.com/api/v1"
+    
+    return "https://api.kaska.lab.mfereji.io/api/v1";
 
   }
 

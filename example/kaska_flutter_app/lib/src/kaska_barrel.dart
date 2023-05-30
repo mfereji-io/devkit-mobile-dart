@@ -1,7 +1,8 @@
 export 'kaska_intro_wrapper.dart';
 export 'kaska/views/main_app_page.dart';
 export 'kaska/views/account_page.dart';
-export 'kaska/views/chat_page.dart';
+export 'kaska/chat/views/chat_home.dart';
+export 'kaska/chat/views/chat_page.dart';
 export 'kaska/views/kaska_page.dart';
 
 export 'kaska/views/common/app_bar.dart';

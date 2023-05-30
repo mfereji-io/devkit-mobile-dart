@@ -62,9 +62,27 @@ import 'package:kaskazini/util/service_locator.dart';
           initial: true,
           children:[
             AutoRoute<dynamic>(
-              path: '',
-              page: ChatPage,
+              path: 'home',
+              page: ChatHomePage,
+              initial: true,
             ),
+            AutoRoute<dynamic>(
+              path: 'group',
+              page: ChatPage,
+              //initial: true,
+            ),
+            /*
+            AutoRoute<dynamic>(
+              path: 'home',
+              page: ChatHomePage,
+              initial: true,
+            ),
+            */
+            
+            
+            
+            
+            
           ],
         ),
         AutoRoute<dynamic>(

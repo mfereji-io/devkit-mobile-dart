@@ -17,11 +17,10 @@ class IntroWrapperPage extends StatelessWidget {
       bloc: authBloc,
       listener:(context, state) async {
 
-        await Future.delayed(const Duration(seconds: 1));
+        //await Future.delayed(const Duration(seconds: 1));
         print("IntroWrapperPage listen with state $state");
         
         if (state is AuthenticationUnauthenticated){
-          //appRouter.replace(LoginRouter());
           appRouter.replace(AuthLoginRoute());
         }else if(state is AuthenticationAuthenticated){
           appRouter.replace(const MainAppRouter());
