@@ -47,9 +47,9 @@ android {
         applicationId "io.mfereji.lab.kaskazini.kaskazini"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        //minSdkVersion 21
+        minSdkVersion 21
         // minSdkVersion 18
-        minSdkVersion localProperties.getProperty('flutter.minSdkVersion').toInteger()
+        //minSdkVersion localProperties.getProperty('flutter.minSdkVersion').toInteger()
         targetSdkVersion localProperties.getProperty('flutter.targetSdkVersion').toInteger()
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
