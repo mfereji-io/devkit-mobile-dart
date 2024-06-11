@@ -1,0 +1,8 @@
+flutter create . --project-name kaskazini --org io.mfereji.lab.kaskazini --description "Kaskazini chat app by the Mfereji.io team."
+
+#create app icon 
+flutter pub run flutter_launcher_icons
+
+#Build routes
+flutter packages pub run build_runner build -d -v 
+
