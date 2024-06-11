@@ -40,7 +40,7 @@ dependencies:
 
 #######
   mfereji:
-    path: ../../../mfereji-dart
+    path: ../../mfereji-dart
 
   dash_chat_2: ^0.0.15
   responsive_builder: ^0.7.0
